@@ -285,7 +285,6 @@ section { padding: var(--section-v) var(--section-h); }
   min-width: 100%; min-height: 100%;
   transform: translate(-50%, -50%);
   border: none;
-  opacity: 0; transition: opacity 1s ease;
 }
 .hero-overlay {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -584,8 +583,7 @@ footer { background: var(--color-dark); padding: 4rem var(--section-h); display:
 
 <div id="home-hero" class="hero">
   <div class="hero-video-bg">
-    <div id="yt-facade" style="position:absolute;inset:0;background:url('https://img.youtube.com/vi/mIdRoq3L-nI/maxresdefault.jpg') center/cover no-repeat;z-index:2;transition:opacity .8s ease;"></div>
-    <iframe id="yt-iframe" src="" data-src="https://www.youtube.com/embed/mIdRoq3L-nI?autoplay=1&loop=1&playlist=mIdRoq3L-nI&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/mIdRoq3L-nI?autoplay=1&loop=1&playlist=mIdRoq3L-nI&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <div class="hero-overlay"></div>
   
@@ -1123,24 +1121,6 @@ function updateParallax() {
 
 window.addEventListener('load', updateParallax);
 updateParallax();
-
-// YouTube facade: load iframe after short delay, fade out thumbnail once playing
-(function() {
-  var facade = document.getElementById('yt-facade');
-  var iframe = document.getElementById('yt-iframe');
-  if (!iframe || !facade) return;
-  // Delay src set so iframe loads hidden, avoiding play button flash
-  setTimeout(function() {
-    iframe.src = iframe.getAttribute('data-src');
-    iframe.addEventListener('load', function() {
-      // Show thumbnail for 6 seconds, then crossfade to video
-      setTimeout(function() {
-        iframe.style.opacity = '1';
-        setTimeout(function() { facade.style.opacity = '0'; }, 600);
-      }, 6000);
-    });
-  }, 100);
-})();
 </script>
 </body>
 </html>
