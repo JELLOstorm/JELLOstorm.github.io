@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>He Restoreth Ministries — Rest & Renewal for Missionaries</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS — edit here to restyle the whole site
+   ============================================================ */
+:root {
+  --color-primary:   #253828;   /* Deep Oregon forest green  */
+  --color-accent:    #bf7e2e;   /* Warm autumn gold           */
+  --color-secondary: #4d6e44;   /* Mid sage green             */
+  --color-bg-light:  #f5f1e8;   /* Warm parchment cream       */
+  --color-bg-mist:   #eaf0e3;   /* Light sage mist            */
+  --color-dark:      #1a1f15;   /* Deep charcoal              */
+  --color-white:     #ffffff;   /* Pure white                 */
+
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Jost', system-ui, sans-serif;
+
+  --text-xs:   0.75rem;   
+  --text-sm:   0.875rem;  
+  --text-base: 1rem;      
+  --text-md:   1.0625rem; 
+  --text-lg:   1.125rem;  
+
+  --radius:    2px;    
+  --section-v: 6rem;   
+  --section-h: 4rem;   
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  background: var(--color-bg-light);
+  color: var(--color-dark);
+  font-weight: 400;
+  overflow-x: hidden;
+}
+.page { display: none; }
+.page.active { display: block; }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem var(--section-h);
+  background: rgba(245,241,232,.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(77,110,68,.15);
+  transition: box-shadow .3s;
+}
+.nav-logo {
+  font-family: var(--font-heading);
+  font-size: 1.4rem; font-weight: 600;
+  color: var(--color-primary); letter-spacing: .03em;
+  cursor: pointer; border: none; background: none;
+}
+.nav-logo span { color: var(--color-accent); }
+.nav-links { display: flex; gap: 0; list-style: none; align-items: center; }
+.nav-links > li > a,
+.nav-links > li > button {
+  display: block; font-size: var(--text-xs);
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--color-primary); text-decoration: none;
+  font-weight: 600; padding: .5rem 1rem;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-body);
+  transition: color .25s;
+}
+.nav-links > li > a:hover,
+.nav-links > li > button:hover { color: var(--color-accent); }
+.has-dropdown { position: relative; }
+.has-dropdown:hover .dropdown { display: flex; }
+.dropdown {
+  display: none; flex-direction: column;
+  position: absolute; top: 100%; left: 0;
+  background: var(--color-white);
+  border: 1px solid var(--color-bg-mist);
+  border-top: 2px solid var(--color-accent);
+  min-width: 200px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.08); z-index: 300;
+}
+.dropdown a {
+  display: block; padding: .75rem 1.25rem;
+  font-size: var(--text-xs); letter-spacing: .1em;
+  text-transform: uppercase; color: var(--color-primary);
+  text-decoration: none; font-weight: 500;
+  border-bottom: 1px solid var(--color-bg-mist);
+  transition: background .2s, color .2s;
+}
+.dropdown a:last-child { border-bottom: none; }
+.dropdown a:hover { background: var(--color-bg-mist); color: var(--color-accent); }
+.nav-cta {
+  background: var(--color-primary) !important;
+  color: var(--color-white) !important;
+  padding: .55rem 1.4rem !important;
+  border-radius: var(--radius); margin-left: .5rem;
+}
+.nav-cta:hover { background: var(--color-accent) !important; }
+.mob-btn {
+  display: none; background: none; border: none;
+  cursor: pointer; color: var(--color-primary); padding: .3rem;
+}
+
+/* ============================================================
+   SHARED LAYOUT
+   ============================================================ */
+section { padding: var(--section-v) var(--section-h); }
+
+.section-tag {
+  font-size: var(--text-xs);
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--color-accent); margin-bottom: .9rem;
+  font-weight: 600;
+}
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 300; line-height: 1.15;
+  color: var(--color-primary);
+}
+.section-title em { font-style: italic; }
+.section-body {
+  font-size: var(--text-md);
+  line-height: 1.85;
+  color: #3d4838;
+  max-width: 620px;
+  margin-top: 1.4rem;
+}
+.divider { width: 44px; height: 2px; background: var(--color-accent); margin: 1.8rem 0; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--color-accent); color: var(--color-white);
+  padding: .85rem 2rem; font-size: var(--text-xs);
+  letter-spacing: .13em; text-transform: uppercase;
+  text-decoration: none; border: none; border-radius: var(--radius);
+  cursor: pointer; font-family: var(--font-body); font-weight: 600;
+  transition: background .25s, transform .2s;
+}
+.btn-primary:hover { background: var(--color-secondary); transform: translateY(-2px); }
+.btn-forest {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--color-primary); color: var(--color-white);
+  padding: .85rem 2rem; font-size: var(--text-xs);
+  letter-spacing: .13em; text-transform: uppercase;
+  text-decoration: none; border: none; border-radius: var(--radius);
+  cursor: pointer; font-family: var(--font-body); font-weight: 600;
+  transition: background .25s, transform .2s;
+}
+.btn-forest:hover { background: var(--color-accent); transform: translateY(-2px); }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border: 2px solid var(--color-primary); color: var(--color-primary);
+  padding: .8rem 2rem; font-size: var(--text-xs);
+  letter-spacing: .13em; text-transform: uppercase;
+  text-decoration: none; border-radius: var(--radius);
+  background: none; cursor: pointer; font-family: var(--font-body); font-weight: 600;
+  transition: background .25s, color .25s;
+}
+.btn-outline:hover { background: var(--color-primary); color: var(--color-white); }
+.btn-outline-light {
+  display: inline-flex; align-items: center; gap: .5rem;
+  border: 2px solid rgba(255,255,255,.65); color: var(--color-white);
+  padding: .8rem 2rem; font-size: var(--text-xs);
+  letter-spacing: .13em; text-transform: uppercase;
+  text-decoration: none; border-radius: var(--radius);
+  font-family: var(--font-body); font-weight: 600;
+  transition: background .25s;
+}
+.btn-outline-light:hover { background: rgba(255,255,255,.15); }
+.btn-white {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--color-white); color: var(--color-accent);
+  padding: .85rem 2.2rem; font-size: var(--text-xs);
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; border-radius: var(--radius);
+  font-weight: 600; border: none; cursor: pointer;
+  font-family: var(--font-body);
+  transition: background .25s, color .25s, transform .2s;
+}
+.btn-white:hover { background: var(--color-primary); color: var(--color-white); transform: translateY(-2px); }
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+.form-group { margin-bottom: 1.2rem; }
+.form-group label {
+  display: block; font-size: var(--text-xs);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--color-secondary); margin-bottom: .5rem; font-weight: 600;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%; padding: .85rem 1rem;
+  border: 1px solid rgba(77,110,68,.28); border-radius: var(--radius);
+  background: var(--color-bg-light); color: var(--color-dark);
+  font-family: var(--font-body); font-size: var(--text-base);
+  transition: border-color .25s;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { outline: none; border-color: var(--color-accent); }
+.form-group textarea { resize: vertical; min-height: 130px; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.btn-submit {
+  width: 100%; background: var(--color-primary); color: var(--color-white);
+  padding: .95rem; font-family: var(--font-body); font-size: var(--text-xs);
+  letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+  border: none; border-radius: var(--radius); cursor: pointer;
+  transition: background .25s, transform .2s; margin-top: .5rem;
+}
+.btn-submit:hover { background: var(--color-accent); transform: translateY(-2px); }
+
+/* ============================================================
+   PAGE HERO (inner pages)
+   ============================================================ */
+.page-hero {
+  padding: 11rem var(--section-h) 5rem;
+  background: linear-gradient(to bottom,rgba(15,22,12,.54),rgba(15,22,12,.16) 70%,var(--color-bg-light) 100%) center/cover no-repeat;
+  min-height: 52vh; display: flex; flex-direction: column; justify-content: flex-end;
+}
+.page-hero .section-tag { color: rgba(255,255,255,.7); }
+
+/* ============================================================
+   REVEAL ANIMATION
+   ============================================================ */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   CTA BAND
+   ============================================================ */
+.cta-band { background: var(--color-accent); padding: 5rem var(--section-h); text-align: center; }
+.cta-band h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300; color: var(--color-white); margin-bottom: 1rem;
+}
+.cta-band p {
+  color: rgba(255,255,255,.88); font-size: var(--text-md);
+  line-height: 1.75; margin-bottom: 2.2rem;
+  max-width: 560px; margin-left: auto; margin-right: auto;
+}
+
+/* ============================================================
+   HOME — HERO WITH BACKGROUND VIDEO
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 9rem var(--section-h) 7rem; position: relative;
+  overflow: hidden;
+  background: var(--color-dark);
+}
+.hero-video-bg {
+  position: absolute; top: 50%; left: 50%;
+  width: 100%; height: 100%;
+  transform: translate(-50%, -50%); z-index: 1;
+  pointer-events: none;
+}
+.hero-video-bg iframe {
+  position: absolute; top: 50%; left: 50%;
+  width: 177.78vh; /* 16:9 ratio */
+  height: 56.25vw; /* 16:9 ratio */
+  min-width: 100%; min-height: 100%;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+.hero-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(15,22,12,.65) 0%, rgba(15,22,12,.35) 65%, var(--color-bg-light) 100%);
+  z-index: 2;
+}
+.hero-content {
+  position: relative; z-index: 3;
+  width: 100%;
+}
+.hero-eyebrow {
+  font-size: var(--text-xs); letter-spacing: .24em; text-transform: uppercase;
+  color: var(--color-accent); margin-bottom: 1.3rem; font-weight: 600;
+  animation: fadeUp .8s ease both .2s;
+}
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 7.5vw, 7rem);
+  font-weight: 300; line-height: 1.02;
+  color: var(--color-white); max-width: 900px;
+  animation: fadeUp .9s ease both .4s;
+}
+.hero h1 em { font-style: italic; color: var(--color-accent); }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.75;
+  color: rgba(255,255,255,.85); max-width: 500px; margin-top: 1.8rem;
+  animation: fadeUp .9s ease both .6s;
+}
+.hero-actions { display: flex; gap: 1rem; margin-top: 2.8rem; flex-wrap: wrap; animation: fadeUp .9s ease both .8s; }
+
+
+
+/* HOME — STATS */
+.stats-bar { background: var(--color-primary); display: flex; justify-content: center; padding: 3rem var(--section-h); position: relative; z-index: 4; }
+.stat-item { display: flex; flex-direction: column; align-items: center; padding: 0 3.5rem; border-right: 1px solid rgba(255,255,255,.12); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: var(--font-heading); font-size: 3rem; font-weight: 300; color: var(--color-accent); line-height: 1; }
+.stat-label { font-size: var(--text-xs); letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: .5rem; text-align: center; font-weight: 500; }
+
+/* HOME — ABOUT */
+.home-about { background: var(--color-white); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.about-visual { position: relative; }
+.about-img-main { width: 78%; height: auto; object-fit: unset; border-radius: var(--radius); position: relative; float: right; box-shadow: -8px 8px 40px rgba(0,0,0,.12); }
+.about-quote-card { position: absolute; top: 0; left: 0; width: 56%; z-index: 1; background: var(--color-bg-mist); padding: 1.8rem; border-radius: var(--radius); border-left: 3px solid var(--color-accent); }
+.about-quote-card blockquote { font-family: var(--font-heading); font-size: 1.2rem; font-style: italic; color: var(--color-primary); line-height: 1.6; }
+.about-quote-card cite { display: block; margin-top: .8rem; font-size: var(--text-xs); letter-spacing: .13em; text-transform: uppercase; color: var(--color-accent); font-style: normal; font-weight: 600; }
+
+/* HOME — SERVICES */
+.home-services { background: var(--color-bg-light); }
+.services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; background: var(--color-bg-mist); border-radius: var(--radius); overflow: hidden; }
+.svc-card { background: var(--color-white); padding: 2.8rem 2.4rem; position: relative; overflow: hidden; cursor: pointer; transition: background .3s; border: none; text-align: left; font-family: var(--font-body); }
+.svc-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--color-accent); transition: height .4s ease; }
+.svc-card:hover::before { height: 100%; }
+.svc-card:hover { background: var(--color-bg-mist); }
+.svc-num { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 300; color: rgba(77,110,68,.12); line-height: 1; position: absolute; top: 1.5rem; right: 1.8rem; }
+.svc-icon { width: 40px; height: 40px; margin-bottom: 1.4rem; display: block; color: var(--color-accent); }
+.svc-card h3 { font-family: var(--font-heading); font-size: 1.6rem; font-weight: 400; color: var(--color-primary); margin-bottom: .75rem; }
+.svc-card p { font-size: var(--text-base); line-height: 1.7; color: #4a5040; }
+
+/* HOME — RETREAT PREVIEW */
+.retreat-preview { background: var(--color-primary); display: grid; grid-template-columns: 1fr 1.15fr; gap: 5rem; align-items: center; }
+.retreat-preview .section-title { color: var(--color-white); }
+.retreat-preview .section-body { color: rgba(255,255,255,.78); }
+.feature-list { margin-top: 2rem; display: flex; flex-direction: column; gap: .9rem; }
+.feature-row { display: flex; align-items: flex-start; gap: 1rem; padding: 1.1rem 1.3rem; background: rgba(255,255,255,.07); border-radius: var(--radius); border-left: 2px solid var(--color-accent); }
+.feature-row-icon { width: 22px; height: 22px; flex-shrink: 0; margin-top: .15rem; color: var(--color-accent); }
+.feature-row-text h4 { font-size: var(--text-base); font-weight: 600; color: var(--color-white); margin-bottom: .25rem; }
+.feature-row-text p { font-size: var(--text-sm); color: rgba(255,255,255,.58); line-height: 1.55; }
+.retreat-photos { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.retreat-photos img { width: 100%; height: auto; object-fit: unset; border-radius: var(--radius); box-shadow: 0 4px 20px rgba(0,0,0,.25); }
+.retreat-photos img:first-child { grid-column: 1/-1; }
+.retreat-photos img:nth-child(2), .retreat-photos img:nth-child(3) { }
+
+/* TESTIMONIAL CARDS */
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+.testi-card { background: var(--color-white); padding: 2.2rem; border-radius: var(--radius); border-top: 3px solid var(--color-accent); box-shadow: 0 2px 16px rgba(0,0,0,.05); }
+.testi-card p { font-family: var(--font-heading); font-size: var(--text-lg); font-style: italic; line-height: 1.65; color: var(--color-primary); margin-bottom: 1.2rem; }
+.testi-card cite { font-size: var(--text-xs); letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent); font-style: normal; font-weight: 600; }
+
+/* PILLARS */
+.pillars-band { background: var(--color-dark); padding: 5rem var(--section-h); display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+.pillar { padding: 2.8rem 2.4rem; text-align: center; background: rgba(255,255,255,.03); border-right: 1px solid rgba(255,255,255,.07); }
+.pillar:last-child { border-right: none; }
+.pillar-icon { width: 40px; height: 40px; display: block; margin: 0 auto 1.3rem; color: var(--color-accent); }
+.pillar h3 { font-family: var(--font-heading); font-size: 1.7rem; color: var(--color-accent); margin-bottom: .9rem; }
+.pillar p { font-size: var(--text-base); color: rgba(255,255,255,.55); line-height: 1.75; }
+
+/* HOME — CONTACT */
+.home-contact { background: var(--color-white); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+.contact-info-list { display: flex; flex-direction: column; gap: 1.8rem; margin-top: 2rem; }
+.contact-row { display: flex; align-items: flex-start; gap: 1.1rem; }
+.contact-icon-box { width: 42px; height: 42px; border-radius: 50%; background: var(--color-bg-mist); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-secondary); }
+.contact-icon-box svg { width: 20px; height: 20px; }
+.contact-row-text { font-size: var(--text-base); color: #3d4838; line-height: 1.6; }
+.contact-row-text strong { display: block; font-size: var(--text-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--color-accent); margin-bottom: .25rem; font-weight: 600; }
+.contact-row-text a { color: var(--color-primary); text-decoration: none; font-weight: 500; }
+.contact-row-text a:hover { color: var(--color-accent); }
+
+/* RETREAT */
+.retreat-detail { background: var(--color-white); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.retreat-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.retreat-gallery img { width: 100%; height: auto; display: block; object-fit: unset; border-radius: var(--radius); }
+.retreat-gallery img:first-child { grid-column: 1/-1; }
+.retreat-gallery img:not(:first-child) { }
+.pricing-card { background: var(--color-bg-mist); border-radius: var(--radius); padding: 2.2rem; border-left: 3px solid var(--color-accent); margin-top: 2rem; }
+.pricing-card h4 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-primary); margin-bottom: 1.1rem; }
+.pricing-item { display: flex; align-items: flex-start; gap: .9rem; margin-bottom: 1rem; font-size: var(--text-base); color: #3d4838; line-height: 1.65; }
+.pricing-item svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: .3rem; color: var(--color-accent); }
+.offer-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-top: 2.5rem; }
+.offer-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem 1.4rem; background: var(--color-white); border-radius: var(--radius); border-left: 2px solid var(--color-accent); font-size: var(--text-base); color: #3d4838; line-height: 1.6; }
+.offer-item svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: .3rem; color: var(--color-accent); }
+.photo-mosaic { display: grid; grid-template-columns: repeat(3,1fr); gap: .8rem; margin-top: 3rem; }
+.photo-mosaic img { width: 100%; height: auto; display: block; object-fit: unset; border-radius: var(--radius); }
+.attr-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-top: 2.5rem; }
+.attr-card { padding: 1.6rem; background: var(--color-bg-light); border-radius: var(--radius); border-top: 2px solid var(--color-bg-mist); transition: border-color .25s; }
+.attr-card:hover { border-color: var(--color-accent); }
+.attr-card h4 { font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-primary); margin-bottom: .5rem; }
+.attr-card p { font-size: var(--text-base); color: #4a5040; line-height: 1.65; }
+.attr-card .drive { font-size: var(--text-xs); letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent); margin-top: .7rem; display: flex; align-items: center; gap: .4rem; font-weight: 600; }
+.attr-card .drive svg { width: 14px; height: 14px; }
+.directions-box { background: var(--color-white); padding: 2.6rem; border-radius: var(--radius); margin-top: 2rem; border-left: 3px solid var(--color-primary); }
+.directions-box p { font-size: var(--text-base); line-height: 1.9; color: #3d4838; }
+.directions-box .address { font-size: 1.1rem; font-weight: 600; color: var(--color-primary); margin-bottom: 1rem; }
+.directions-box .note { font-size: var(--text-sm); color: var(--color-accent); margin-top: 1.3rem; font-style: italic; }
+
+/* COUNSELING */
+.counseling-intro { background: var(--color-white); display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; }
+.counselor-section { background: var(--color-bg-light); display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+.counselor-photo-wrap { position: relative; }
+.counselor-photo-wrap img { width: 100%; border-radius: var(--radius); height: auto; object-fit: unset; }
+.credential-badge { position: absolute; bottom: -1px; left: 0; right: 0; background: var(--color-primary); color: var(--color-white); padding: 1rem 1.5rem; font-size: var(--text-sm); letter-spacing: .06em; text-align: center; line-height: 1.6; font-weight: 500; }
+.areas-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: .8rem; margin-top: 2.5rem; }
+.area-card { display: flex; align-items: flex-start; gap: .9rem; padding: 1.1rem 1.3rem; background: var(--color-bg-light); border-radius: var(--radius); border: 1px solid var(--color-bg-mist); font-size: var(--text-base); color: #3d4838; line-height: 1.6; transition: border-color .25s; }
+.area-card:hover { border-color: var(--color-secondary); background: var(--color-bg-mist); }
+.area-card svg { width: 15px; height: 15px; flex-shrink: 0; margin-top: .3rem; color: var(--color-accent); }
+.get-help-section { background: var(--color-primary); color: var(--color-white); }
+.get-help-section .section-title { color: var(--color-white); }
+.get-help-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 2.5rem; }
+.help-steps { display: flex; flex-direction: column; gap: 1rem; }
+.help-step { display: flex; align-items: flex-start; gap: 1.1rem; padding: 1.3rem; background: rgba(255,255,255,.07); border-radius: var(--radius); }
+.step-num { font-family: var(--font-heading); font-size: 2rem; color: var(--color-accent); flex-shrink: 0; line-height: 1; width: 34px; }
+.step-text h4 { font-size: var(--text-base); font-weight: 600; color: var(--color-white); margin-bottom: .3rem; }
+.step-text p { font-size: var(--text-sm); color: rgba(255,255,255,.6); line-height: 1.65; }
+.help-form-box { background: rgba(255,255,255,.07); padding: 2.4rem; border-radius: var(--radius); }
+.help-form-box h3 { font-family: var(--font-heading); font-size: 1.7rem; color: var(--color-white); margin-bottom: 1.5rem; }
+.help-form-box .form-group input,
+.help-form-box .form-group textarea,
+.help-form-box .form-group select { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.22); color: var(--color-white); }
+.help-form-box .form-group select option { background: var(--color-primary); color: var(--color-white); }
+.help-form-box .form-group input::placeholder,
+.help-form-box .form-group textarea::placeholder { color: rgba(255,255,255,.38); }
+.help-form-box .form-group label { color: rgba(255,255,255,.6); }
+.help-form-box .btn-submit { background: var(--color-accent); }
+.help-form-box .btn-submit:hover { background: var(--color-white); color: var(--color-primary); }
+
+/* ABOUT */
+.about-mission { background: var(--color-white); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.staff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+.staff-card { background: var(--color-white); border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+.staff-card img { width: 100%; height: auto; object-fit: unset; }
+.staff-card-body { padding: 1.9rem; }
+.staff-card-body h3 { font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-primary); margin-bottom: .5rem; }
+.staff-card-body .role { font-size: var(--text-xs); letter-spacing: .13em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1rem; display: block; font-weight: 600; }
+.staff-card-body p { font-size: var(--text-base); line-height: 1.75; color: #3d4838; }
+.doctrine-section { background: var(--color-dark); padding: var(--section-v) var(--section-h); }
+.doctrine-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: rgba(255,255,255,.05); margin-top: 3rem; border-radius: var(--radius); overflow: hidden; }
+.doctrine-item { padding: 2.2rem; background: rgba(255,255,255,.02); }
+.doctrine-item h4 { font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-accent); margin-bottom: .9rem; }
+.doctrine-item p { font-size: var(--text-base); color: rgba(255,255,255,.6); line-height: 1.8; }
+.nonprofit-band { background: var(--color-bg-mist); padding: 4rem var(--section-h); text-align: center; }
+.nonprofit-band p { font-size: var(--text-md); color: #3d4838; line-height: 1.8; max-width: 640px; margin: 0 auto; }
+.nonprofit-band a { color: var(--color-primary); font-weight: 600; }
+
+/* TESTIMONIALS */
+.testi-featured { background: var(--color-primary); color: var(--color-white); padding: 6rem var(--section-h); }
+.testi-featured blockquote { font-family: var(--font-heading); font-size: clamp(1.35rem,2.5vw,2rem); font-style: italic; line-height: 1.65; color: var(--color-white); max-width: 880px; margin: 0 auto; text-align: center; position: relative; padding: 0 3rem; }
+.testi-featured blockquote::before { content: '\201C'; font-size: 8rem; color: rgba(191,126,46,.22); position: absolute; top: -2rem; left: -1rem; line-height: 1; font-family: var(--font-heading); }
+.testi-featured cite { display: block; text-align: center; margin-top: 1.5rem; font-size: var(--text-xs); letter-spacing: .15em; text-transform: uppercase; color: var(--color-accent); font-style: normal; font-weight: 600; }
+.testi-long { background: var(--color-white); padding: 2.8rem; border-radius: var(--radius); border-top: 3px solid var(--color-accent); margin-bottom: 1.5rem; box-shadow: 0 2px 16px rgba(0,0,0,.05); }
+.testi-long p { font-size: var(--text-md); line-height: 1.85; color: #3d4838; margin-bottom: 1rem; }
+.testi-cite { font-size: var(--text-xs); letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent); font-weight: 600; }
+
+/* GIVE */
+.give-intro { background: var(--color-white); display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.give-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+.give-card { background: var(--color-white); padding: 2.4rem; border-radius: var(--radius); border-top: 3px solid var(--color-accent); text-align: center; box-shadow: 0 2px 16px rgba(0,0,0,.05); }
+.give-icon { width: 44px; height: 44px; display: block; margin: 0 auto 1.2rem; color: var(--color-accent); }
+.give-card h3 { font-family: var(--font-heading); font-size: 1.45rem; color: var(--color-primary); margin-bottom: .8rem; }
+.give-card p { font-size: var(--text-base); color: #4a5040; line-height: 1.7; }
+
+/* FOOTER */
+footer { background: var(--color-dark); padding: 4rem var(--section-h); display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; border-top: 2px solid var(--color-accent); }
+.footer-logo { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 600; color: var(--color-white); margin-bottom: .9rem; display: block; cursor: pointer; background: none; border: none; text-align: left; }
+.footer-logo span { color: var(--color-accent); }
+.footer-brand p { font-size: var(--text-sm); color: rgba(255,255,255,.45); line-height: 1.8; max-width: 280px; }
+.footer-col h4 { font-size: var(--text-xs); letter-spacing: .18em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1.2rem; font-weight: 600; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+.footer-col ul a,
+.footer-col ul button { font-size: var(--text-sm); color: rgba(255,255,255,.5); text-decoration: none; background: none; border: none; cursor: pointer; font-family: var(--font-body); text-align: left; padding: 0; transition: color .25s; }
+.footer-col ul a:hover,
+.footer-col ul button:hover { color: var(--color-white); }
+.footer-bottom { background: var(--color-dark); padding: 1.4rem var(--section-h); border-top: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-between; align-items: center; }
+.footer-bottom p { font-size: var(--text-xs); color: rgba(255,255,255,.32); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+
+/* PARALLAX CONTROLS */
+.hero,
+.page-hero,
+.parallax-section {
+  background-attachment: scroll; 
+  will-change: background-position;
+}
+.parallax-img-wrap {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.parallax-img-wrap img {
+  transition: transform 0s linear;
+  will-change: transform;
+  display: block;
+  width: 100%;
+  transform-origin: center center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  :root { --section-v: 4rem; --section-h: 1.5rem; }
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .mob-btn { display: block; }
+  .home-about, .retreat-detail, .counseling-intro, .about-mission, .give-intro, .home-contact { grid-template-columns: 1fr; gap: 3rem; }
+  .services-grid, .staff-grid, .give-grid { grid-template-columns: 1fr; }
+  .retreat-preview { grid-template-columns: 1fr; }
+  .testi-grid, .pillars-band { grid-template-columns: 1fr; }
+  .pillar { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
+  footer { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; gap: .5rem; text-align: center; }
+  .stats-bar { flex-wrap: wrap; gap: 1.5rem; }
+  .stat-item { border-right: none; padding: 0 1.5rem; }
+  .get-help-inner, .counselor-section { grid-template-columns: 1fr; }
+  .doctrine-grid, .areas-grid, .offer-grid, .attr-grid, .photo-mosaic { grid-template-columns: 1fr; }
+  .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .about-visual { height: 360px; }
+  .retreat-photos img:first-child { height: 200px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <button class="nav-logo" onclick="nav('home')">He <span>Restoreth</span> Ministries</button>
+  <ul class="nav-links" id="nav-links">
+    <li class="has-dropdown">
+      <button onclick="nav('retreat')">Retreat Center ▾</button>
+      <div class="dropdown">
+        <a href="#" onclick="nav('retreat')">Overview</a>
+        <a href="#" onclick="nav('retreat','what-we-offer')">What We Offer</a>
+        <a href="#" onclick="nav('retreat','attractions')">Nearby Attractions</a>
+        <a href="#" onclick="nav('retreat','directions')">Directions</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <button onclick="nav('counseling')">Counseling ▾</button>
+      <div class="dropdown">
+        <a href="#" onclick="nav('counseling')">Strategic Counseling</a>
+        <a href="#" onclick="nav('counseling','get-help')">Get Help Now</a>
+      </div>
+    </li>
+    <li class="has-dropdown">
+      <button onclick="nav('about')">About ▾</button>
+      <div class="dropdown">
+        <a href="#" onclick="nav('about')">Our Mission</a>
+        <a href="#" onclick="nav('about','staff')">Staff</a>
+        <a href="#" onclick="nav('about','doctrine')">Doctrinal Statement</a>
+      </div>
+    </li>
+    <li><a href="#" onclick="nav('testimonials')">Testimonials</a></li>
+    <li><a href="#" onclick="nav('give')">Give</a></li>
+    <li><a href="#" onclick="nav('counseling','get-help')" class="nav-cta">Get Help Now</a></li>
+    <li style="display:flex;align-items:center;padding-left:.5rem;">
+      <a href="https://www.facebook.com/herestorethministries" target="_blank" rel="noopener" aria-label="Facebook" style="color:var(--color-primary);opacity:.6;transition:opacity .25s;display:flex;align-items:center;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.6'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+    </li>
+  </ul>
+  <button class="mob-btn" onclick="toggleMob()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<div id="page-home" class="page active">
+
+<div id="home-hero" class="hero">
+  <div class="hero-video-bg">
+    <iframe src="https://www.youtube.com/embed/mIdRoq3L-nI?autoplay=1&loop=1&playlist=mIdRoq3L-nI&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-content">
+    <p class="hero-eyebrow">He Restoreth Ministries · Butte Falls, Oregon</p>
+    <h1>A Place of <em>Rest</em><br>for Weary<br>Missionaries</h1>
+    <p class="hero-sub">Dedicated care, renewal, and biblical counsel for those who have given everything on the mission field. You are seen. You are not forgotten.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="nav('retreat')">Explore Our Retreat</button>
+      <button class="btn-forest" onclick="nav('counseling')">Learn About Counseling</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item"><span class="stat-num">50+</span><span class="stat-label">Years in Missions</span></div>
+  <div class="stat-item"><span class="stat-num">25+</span><span class="stat-label">Years Helping Missionaries</span></div>
+  <div class="stat-item"><span class="stat-num">114</span><span class="stat-label">Acres of Peaceful Property</span></div>
+  <div class="stat-item"><span class="stat-num">501c3</span><span class="stat-label">Tax-Exempt Nonprofit</span></div>
+</div>
+
+<section class="home-about">
+  <div class="about-visual reveal">
+    <div class="about-quote-card">
+      <blockquote>"The Lord is my shepherd… He restoreth my soul."</blockquote>
+      <cite>Psalm 23:1–3</cite>
+    </div>
+    <img id="img-about-main" class="about-img-main" src="images/about-pond.jpg" alt="Peaceful pond at He Restoreth" />
+  </div>
+  <div class="reveal">
+    <p class="section-tag">Our Mission</p>
+    <h2 class="section-title">Caring for Those<br>Who <em>Serve</em> the World</h2>
+    <div class="divider"></div>
+    <p class="section-body">Thousands of missionaries have dedicated their lives to proclaiming the Gospel. Yet each year, approximately 20% leave the field — wounded, discouraged, and without adequate support. He Restoreth Ministries exists to fill that gap.</p>
+    <p class="section-body" style="margin-top:1rem;">God has provided a beautiful 114-acre property in the foothills of southern Oregon, and He has equipped Brent and Ruth Ullom — who themselves served as missionaries in Ecuador and grew up on the mission field — to minister to hurting servants of God with compassion, wisdom, and the love of Christ.</p>
+    <button class="btn-forest" style="margin-top:2rem;" onclick="nav('about')">Learn About HRM</button>
+  </div>
+</section>
+
+<section class="home-services">
+  <div class="services-header reveal">
+    <div><p class="section-tag">What We Offer</p><h2 class="section-title">Three Ways We <em>Serve</em></h2></div>
+    <button class="btn-outline" onclick="nav('retreat')">View All Services</button>
+  </div>
+  <div class="services-grid reveal">
+    <button class="svc-card" onclick="nav('retreat')">
+      <span class="svc-num">01</span>
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V12"/><path d="M12 12L7 7"/><path d="M12 12L17 7"/><path d="M8 17c-3 0-5-2-5-5 0-2.5 1.5-4.5 4-5 .5-3 3-5 5-5s4.5 2 5 5c2.5.5 4 2.5 4 5 0 3-2 5-5 5"/></svg>
+      <h3>Retreat Center</h3>
+      <p>A private two-bedroom apartment on 114.5 acres of forest, fields, pond, and creek — a place to rest, breathe, and be restored in God's creation.</p>
+    </button>
+    <button class="svc-card" onclick="nav('counseling')">
+      <span class="svc-num">02</span>
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.6z"/></svg>
+      <h3>Strategic Counseling</h3>
+      <p>Faith-based professional counseling for missionaries navigating trauma, marriage challenges, team conflict, grief, cross-cultural stress, and more.</p>
+    </button>
+    <button class="svc-card" onclick="nav('counseling','get-help')">
+      <span class="svc-num">03</span>
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <h3>Get Help Now</h3>
+      <p>Send us a brief message describing your situation. We will respond prayerfully and biblically within 48 hours.</p>
+    </button>
+  </div>
+</section>
+
+<section class="retreat-preview">
+  <div class="reveal">
+    <p class="section-tag" style="color:rgba(191,126,46,.9);">The Retreat Center</p>
+    <h2 class="section-title">One of the Most<br><em>Beautiful</em> Spots<br>on Earth</h2>
+    <div class="divider"></div>
+    <p class="section-body">Nestled in the foothills of southern Oregon, our 114-acre property offers unparalleled peace and natural beauty. Leave behind the pressures of ministry and allow God to restore your soul.</p>
+    <div class="feature-list">
+      <div class="feature-row">
+        <svg class="feature-row-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M2 12h20"/></svg>
+        <div class="feature-row-text"><h4>114.5 Acres of Natural Beauty</h4><p>Old-growth forest, open meadows, a tranquil pond, and two meandering creeks.</p></div>
+      </div>
+      <div class="feature-row">
+        <svg class="feature-row-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        <div class="feature-row-text"><h4>Private Two-Bedroom Apartment</h4><p>A fully private, comfortable space for you and your family — your home away from home.</p></div>
+      </div>
+      <div class="feature-row">
+        <svg class="feature-row-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="3,11 22,2 13,21 11,13 3,11"/></svg>
+        <div class="feature-row-text"><h4>Near Crater Lake &amp; Rogue River</h4><p>Close to world-class natural attractions for sightseeing and family adventures.</p></div>
+      </div>
+    </div>
+    <button class="btn-primary" style="margin-top:2.5rem;" onclick="nav('retreat')">Explore the Retreat</button>
+  </div>
+  <div class="retreat-photos reveal">
+    <div class="parallax-img-wrap"><img id="img-prev1" src="images/preview-wide.jpg" alt="Nature at He Restoreth" /></div>
+    <div class="parallax-img-wrap"><img id="img-prev2" src="images/preview-apt.jpg" alt="Retreat apartment" /></div>
+    <div class="parallax-img-wrap"><img id="img-prev3" src="images/preview-pond.jpg" alt="Peaceful pond" /></div>
+  </div>
+</section>
+
+<section style="background:var(--color-bg-light);">
+  <div class="reveal" style="text-align:center;"><p class="section-tag">Testimonials</p><h2 class="section-title">What <em>Missionaries</em> Are Saying</h2></div>
+  <div class="testi-grid reveal">
+    <div class="testi-card"><p>"He Restoreth Ministries was a much-needed resource for our family during a very low time in our ministry and personal lives. The beautiful location and Christian counsel and fellowship were a deep blessing."</p><cite>— Missionary Family</cite></div>
+    <div class="testi-card"><p>"We came knowing that the Lord is our Comforter and Healer. Through Godly counsel, times of solitude, nature, and community with the Ulloms, we returned refreshed and ready to move forward."</p><cite>— Missionary Family</cite></div>
+    <div class="testi-card"><p>"Thank you for these days of rest, rejuvenation, and reflection in such quiet, lovely surroundings. We have been blessed and encouraged beyond what we could have imagined."</p><cite>— Visiting Missionary</cite></div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;"><button class="btn-outline reveal" onclick="nav('testimonials')">Read More Testimonials</button></div>
+</section>
+
+<div class="pillars-band">
+  <div class="pillar reveal">
+    <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    <h3>Prepare</h3><p>Equipping missionary families for the crises and stresses they will face — through teaching, counseling, seminars, and pre-field retreats.</p>
+  </div>
+  <div class="pillar reveal">
+    <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <h3>Protect</h3><p>Walking alongside families in crisis — serving as counselor, consultant, and advocate with their sending church or mission organization.</p>
+  </div>
+  <div class="pillar reveal">
+    <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    <h3>Provide</h3><p>Offering a beautiful, fully private place of retreat and restoration for missionary families and individuals at little to no cost.</p>
+  </div>
+</div>
+
+<div class="cta-band reveal">
+  <h2>Be the Good Samaritan</h2>
+  <p>In Luke 10, Jesus commended the one who paid the cost to reach out to the hurting. He Restoreth Ministries is a 501(c)3 nonprofit that depends on the generosity of supporters like you. Your gift directly enables wounded missionaries to find rest, healing, and renewed purpose.</p>
+  <button class="btn-white" onclick="nav('give')">Support This Ministry</button>
+</div>
+
+<section class="home-contact" id="home-contact">
+  <div class="reveal">
+    <p class="section-tag">Contact Us</p>
+    <h2 class="section-title">We're Here.<br><em>Reach Out.</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">Whether you are a missionary in need, a church seeking to care for your missionaries, or a supporter who wants to learn more — we would be glad to hear from you.</p>
+    <div class="contact-info-list">
+      <div class="contact-row">
+        <div class="contact-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="contact-row-text"><strong>Mailing Address</strong>He Restoreth Ministries, Inc.<br>PO Box 47, Butte Falls, OR 97522</div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7A2 2 0 0 1 22 16.9z"/></svg></div>
+        <div class="contact-row-text"><strong>Telephone</strong><a href="tel:15418657907">1 (541) 865-7907</a></div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="contact-row-text"><strong>Email</strong><a href="mailto:office@herestoreth.com">office@herestoreth.com</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="section-tag">Newsletter</p>
+    <h2 class="section-title" style="font-size:2.2rem;">Stay <em>Connected</em></h2>
+    <div class="divider"></div>
+    <p style="font-size:var(--text-md);color:#3d4838;line-height:1.75;margin-bottom:1.5rem;">Subscribe to receive updates, encouraging stories, and news from He Restoreth Ministries.</p>
+    <div class="form-group"><label>Email Address *</label><input type="email" placeholder="your@email.com" /></div>
+    <div class="form-row-2"><div class="form-group"><label>First Name</label><input type="text" placeholder="Jane" /></div><div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith" /></div></div>
+    <button class="btn-submit">Subscribe to Newsletter</button>
+  </div>
+</section>
+</div><div id="page-retreat" class="page">
+<div id="retreat-hero" class="page-hero" style="background: linear-gradient(to bottom, rgba(15,22,12,.54), rgba(15,22,12,.16) 70%, var(--color-bg-light) 100%), url('images/hero-retreat.jpg') center / cover no-repeat;">
+  <p class="section-tag">Our Retreat Center</p>
+  <h1 class="section-title" style="color:var(--color-white);font-size:clamp(2.5rem,5vw,4.5rem);">A Sanctuary for<br><em>Weary Souls</em></h1>
+</div>
+
+<section class="retreat-detail">
+  <div class="reveal">
+    <p class="section-tag">The Property</p>
+    <h2 class="section-title">114 Acres of<br><em>God's Creation</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">Our retreat property is nestled in the foothills of southern Oregon, situated on 114 beautiful acres with a peaceful creek running through the land and a large pond. It is one of the most serene and restorative settings imaginable for missionary rest and renewal.</p>
+    <p class="section-body" style="margin-top:1rem;">Our private two-bedroom apartment offers a fully self-contained space for missionary families or individuals. Come for a few days or stay for a week — the pace here is entirely your own. Counseling is available but never required.</p>
+    <p class="section-body" style="margin-top:1rem;">New missionaries are especially welcome — contact us about a pre-field retreat. We also have a special heart for those who have experienced crisis and need a place to process, grieve, and begin to heal.</p>
+    <div class="pricing-card">
+      <h4>What Does It Cost?</h4>
+      <div class="pricing-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Guests provide only their own food. The nearest large store is approximately 30 minutes away.</div>
+      <div class="pricing-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>A nominal heating cost applies during cooler months to cover pellet fuel.</div>
+      <div class="pricing-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Everything else — the apartment, the property, the counseling — is provided entirely free of charge.</div>
+    </div>
+    <button class="btn-forest" style="margin-top:2rem;" onclick="nav('home','home-contact')">Inquire About a Stay</button>
+  </div>
+  <div class="retreat-gallery reveal">
+    <div class="parallax-img-wrap"><img id="img-rg1" src="images/gallery-1.jpg" alt="He Restoreth property" /></div>
+    <div class="parallax-img-wrap"><img id="img-rg2" src="images/gallery-2.jpg" alt="The apartment" /></div>
+    <div class="parallax-img-wrap"><img id="img-rg3" src="images/gallery-3.jpg" alt="Peaceful pond" /></div>
+    <div class="parallax-img-wrap"><img id="img-rg4" src="images/gallery-4.jpg" alt="Property landscape" /></div>
+  </div>
+</section>
+
+<section style="background:var(--color-bg-light);" id="what-we-offer">
+  <div class="reveal">
+    <p class="section-tag">Activities &amp; Amenities</p>
+    <h2 class="section-title">What the <em>Property</em> Offers</h2>
+    <div class="divider"></div>
+    <p class="section-body">The retreat is designed for rest, not a packed agenda. That said, the property and surrounding region offer a wealth of opportunities for recreation, reflection, and family enjoyment.</p>
+  </div>
+  <div class="offer-grid reveal">
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Hiking trails through old-growth forest</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Prayer walks in a serene natural setting</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Wild and domestic animals on the property</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Wading and swimming in the creek</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Canoeing and fishing on the peaceful pond</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Picnic areas throughout the property</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Quiet walking paths for solitude and reflection</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Biblical counseling — available, never required</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Near Crater Lake National Park (1.5 hrs)</div>
+    <div class="offer-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Near Rogue River white-water rafting (45 min)</div>
+  </div>
+  <div class="photo-mosaic reveal">
+    <div class="parallax-img-wrap"><img id="img-m1" src="images/mosaic-1.jpg" alt="Property" /></div>
+    <div class="parallax-img-wrap"><img id="img-m2" src="images/mosaic-2.jpg" alt="Creek" /></div>
+    <div class="parallax-img-wrap"><img id="img-m3" src="images/mosaic-3.jpg" alt="Nature" /></div>
+    <div class="parallax-img-wrap"><img id="img-m4" src="images/mosaic-4.jpg" alt="Forest" /></div>
+    <div class="parallax-img-wrap"><img id="img-m5" src="images/mosaic-5.jpg" alt="Wildlife" /></div>
+    <div class="parallax-img-wrap"><img id="img-m6" src="images/mosaic-6.jpg" alt="Landscape" /></div>
+  </div>
+</section>
+
+<section style="background:var(--color-white);" id="attractions">
+  <div class="reveal"><p class="section-tag">Explore the Region</p><h2 class="section-title">Nearby <em>Attractions</em></h2><div class="divider"></div><p class="section-body">Southern Oregon is home to some of the most spectacular natural and family-friendly destinations in the Pacific Northwest.</p></div>
+  <div class="attr-grid reveal">
+    <div class="attr-card"><h4>Crater Lake National Park</h4><p>One of the most breathtaking natural sites in the US — a deep, crystal-blue volcanic lake of extraordinary beauty. Absolutely unmissable.</p><span class="drive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Approx. 1.5-hour drive</span></div>
+    <div class="attr-card"><h4>Rogue River</h4><p>Exceptional white-water rafting through stunning Oregon wilderness. Several outfitters offer guided trips for all experience levels.</p><span class="drive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Approx. 45-minute drive</span></div>
+    <div class="attr-card"><h4>Rogue-Siskiyou National Forest</h4><p>Explore a natural bridge, ancient redwood groves, cascading waterfalls, and miles of scenic trails.</p><span class="drive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Approx. 45-minute drive</span></div>
+    <div class="attr-card"><h4>Oregon Caves National Monument</h4><p>An unforgettable guided tour through ancient marble caves — a geological wonder perfect for the whole family.</p><span class="drive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Approx. 1.75-hour drive</span></div>
+    <div class="attr-card"><h4>ScienceWorks Hands-On Museum</h4><p>An engaging, interactive museum where children and adults explore science through hands-on exhibits.</p><span class="drive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Approx. 1.5-hour drive</span></div>
+    <div class="attr-card"><h4>Mt. Ashland Ski Area</h4><p>During winter months, enjoy excellent skiing and snowboarding in the Siskiyou Mountains.</p><span class="drive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>Approx. 1.75-hour drive</span></div>
+  </div>
+</section>
+
+<section style="background:var(--color-bg-mist);" id="directions">
+  <div class="reveal"><p class="section-tag">Getting Here</p><h2 class="section-title">Directions to<br>the <em>Retreat Center</em></h2><div class="divider"></div></div>
+  <div class="directions-box reveal">
+    <p class="address">2244 Cobleigh Road · Butte Falls, OR 97522</p>
+    <p>Take the southernmost Gold Hill exit (Exit 40) off Interstate 5. Turn left across the highway, then left again toward Gold Hill. Take the first right, cross the railroad tracks, and follow the road to the right. Continue on Highway 234 for approximately 17.5 miles until it ends at Highway 62. Turn left onto Highway 62 and drive ¾ of a mile until you reach Butte Falls Highway on your right. Follow Butte Falls Highway for 12.5 miles, then turn left onto Cobleigh Road. Continue for 2 miles until you cross a steel bridge. Almost immediately on the right you will see several driveways — the second driveway is ours. Take the driveway to the left and follow it for approximately ¾ of a mile. The house will be on your right.</p>
+    <p class="note">Please call ahead before your arrival so we can provide specific guidance and prepare a warm welcome. 1 (541) 865-7907</p>
+  </div>
+  <div class="reveal" style="margin-top:2rem;border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.10);">
+    <iframe
+      title="He Restoreth Ministries Location"
+      src="https://maps.google.com/maps?q=2244+Cobleigh+Rd,+Butte+Falls,+OR+97522&t=&z=13&ie=UTF8&iwloc=&output=embed"
+      width="100%" height="420" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+  <div style="text-align:center;margin-top:1.5rem;">
+    <a href="https://maps.google.com/?q=2244+Cobleigh+Rd,+Butte+Falls,+OR+97522" target="_blank" rel="noopener" class="btn-forest" style="display:inline-flex;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:.4rem;"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Open in Google Maps
+    </a>
+  </div>
+</section>
+</div><div id="page-counseling" class="page">
+<div id="counseling-hero" class="page-hero" style="background: linear-gradient(to bottom, rgba(15,22,12,.54), rgba(15,22,12,.16) 70%, var(--color-bg-light) 100%), url('images/hero-counseling.jpg') center / cover no-repeat;">
+  <p class="section-tag">Counseling Services</p>
+  <h1 class="section-title" style="color:var(--color-white);font-size:clamp(2.5rem,5vw,4.5rem);">You Don't Have<br>to Face This <em>Alone</em></h1>
+</div>
+<section class="counseling-intro">
+  <div class="reveal">
+    <p class="section-tag">Strategic Counseling</p>
+    <h2 class="section-title">Faith-Based Care<br>for <em>Missionaries</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">Are you feeling that something is wrong in your ministry or personal life? Are you unsure who to turn to? He Restoreth Ministries offers experienced, compassionate, biblically grounded counsel for missionaries and those in full-time ministry.</p>
+    <p class="section-body" style="margin-top:1rem;">We have been involved in missions for over 50 years, and have been walking alongside hurting missionaries for more than 25. We understand the field — because we have been on it.</p>
+    <p class="section-body" style="margin-top:1.5rem;font-style:italic;color:var(--color-secondary);">Available via email, chat, Zoom video sessions, or in person at the retreat center.</p>
+    <button class="btn-forest" style="margin-top:2rem;" onclick="document.getElementById('get-help').scrollIntoView({behavior:'smooth'})">Request Counseling</button>
+  </div>
+  <div class="reveal"><img id="img-counsel" src="images/counseling-room.jpg" alt="Counseling at He Restoreth" style="width:100%;height:auto;display:block;border-radius:var(--radius);" /></div>
+</section>
+
+<section class="counselor-section">
+  <div class="counselor-photo-wrap reveal">
+    <img id="img-counselor" src="images/brent-counselor.jpg" alt="Brent Ullom" />
+    <div class="credential-badge">Master's Degree in Clinical Psychology · Wheaton College</div>
+  </div>
+  <div class="reveal">
+    <p class="section-tag">Meet Our Counselor</p>
+    <h2 class="section-title">Brent Ullom,<br><em>M.A. Clinical Psychology</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">Brent holds a Master's degree in Clinical Psychology from Wheaton College, specializing in marriage and family, cross-cultural, and crisis counseling. He is a Missionary Kid who grew up in Haiti, and later served with his family as a missionary in Ecuador for six years.</p>
+    <p class="section-body" style="margin-top:1rem;">This firsthand experience — including personal tragedies such as the loss of a newborn child — gives Brent a depth of empathy that is rare among counselors. He does not speak from theory alone, but from a life genuinely lived on the field.</p>
+    <div style="background:var(--color-bg-mist);padding:1.9rem;border-radius:var(--radius);border-left:3px solid var(--color-accent);margin-top:2rem;">
+      <p style="font-family:var(--font-heading);font-size:1.2rem;font-style:italic;color:var(--color-primary);line-height:1.65;">"My approach to counseling is grounded in a rock-solid faith in God's Word and dependence on the Holy Spirit to guide each conversation."</p>
+      <cite style="display:block;margin-top:.9rem;font-size:var(--text-xs);letter-spacing:.13em;text-transform:uppercase;color:var(--color-accent);font-weight:600;">— Brent Ullom</cite>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--color-white);">
+  <div class="reveal"><p class="section-tag">Areas of Focus</p><h2 class="section-title">How We Can <em>Help</em></h2><div class="divider"></div><p class="section-body">Brent brings experience across a wide range of pastoral and clinical areas, with particular expertise in the pressures faced by cross-cultural workers and their families.</p></div>
+  <div class="areas-grid reveal">
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Marriage — enrichment, relational tension, infidelity, cross-cultural adjustment</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Parenting — cultural re-entry, teen issues, classroom challenges, MK concerns</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Missionary team conflicts and leadership tensions</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Furlough transitions and home assignment stress</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Trauma, crisis response, and grief processing</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Depression, anxiety, and emotional exhaustion</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Health-related and medical stress</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Pre-field preparation and new missionary readiness</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>Cross-cultural and re-entry identity challenges</div>
+    <div class="area-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20,6 9,17 4,12"/></svg>General encouragement and experienced biblical counsel</div>
+  </div>
+</section>
+
+<section class="get-help-section" id="get-help">
+  <div class="reveal">
+    <p class="section-tag" style="color:rgba(191,126,46,.85);">For Missionaries Only</p>
+    <h2 class="section-title">Need Support <em>Today?</em></h2>
+    <div class="divider"></div>
+    <p style="font-size:var(--text-md);color:rgba(255,255,255,.78);line-height:1.8;max-width:560px;margin-top:1rem;">If you are a missionary or in full-time ministry and you are navigating a difficult situation, please reach out. You do not need to face this alone.</p>
+  </div>
+  <div class="get-help-inner">
+    <div class="help-steps reveal">
+      <div class="help-step"><span class="step-num">1</span><div class="step-text"><h4>Write to Us</h4><p>Send an email of 300 words or less to <strong style="color:var(--color-accent);"><a href="mailto:office@herestoreth.com">office@herestoreth.com</a></strong> or use the form on the right.</p></div></div>
+      <div class="help-step"><span class="step-num">2</span><div class="step-text"><h4>We Respond Within 48 Hours</h4><p>We will read your message prayerfully and respond with wisdom helpful to your specific situation.</p></div></div>
+      <div class="help-step"><span class="step-num">3</span><div class="step-text"><h4>Biblical &amp; Prayerful Guidance</h4><p>Our commitment is to respond promptly and in accordance with God's Word — with genuine care for you.</p></div></div>
+      <div class="help-step"><span class="step-num">4</span><div class="step-text"><h4>Continue the Conversation</h4><p>Many find ongoing correspondence, Zoom sessions, or an in-person retreat deeply helpful.</p></div></div>
+    </div>
+    <div class="help-form-box reveal">
+      <h3>Send Us a Message</h3>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith" /></div>
+      <div class="form-group"><label>Email Address *</label><input type="email" placeholder="your@email.com" /></div>
+      <div class="form-group"><label>Current Status</label><select><option>Currently serving overseas</option><option>On furlough / home assignment</option><option>Preparing for the field</option><option>Recently returned</option><option>Other</option></select></div>
+      <div class="form-group"><label>Your Situation (300 words or less)</label><textarea placeholder="Please share briefly what you are navigating. All correspondence is treated with care and confidentiality."></textarea></div>
+      <button class="btn-submit">Send Message</button>
+    </div>
+  </div>
+</section>
+</div><div id="page-about" class="page">
+<div id="about-hero" class="page-hero" style="background: linear-gradient(to bottom, rgba(15,22,12,.54), rgba(15,22,12,.16) 70%, var(--color-bg-light) 100%), url('images/hero-about.jpg') center / cover no-repeat;">
+  <p class="section-tag">About He Restoreth Ministries</p>
+  <h1 class="section-title" style="color:var(--color-white);font-size:clamp(2.5rem,5vw,4.5rem);">Called to Care<br>for the <em>Called</em></h1>
+</div>
+<section class="about-mission">
+  <div class="reveal">
+    <p class="section-tag">Our Story</p>
+    <h2 class="section-title">Why HRM <em>Exists</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">Thousands of missionaries have sacrificed greatly to carry the Gospel to the nations. Yet on the front lines, these spiritual soldiers face extraordinary levels of trauma, stress, and conflict — and many return home wounded, discouraged, and broken. Each year, approximately 20% leave the mission field entirely.</p>
+    <p class="section-body" style="margin-top:1rem;">Tragically, for many of these servants, there are few places of genuine healing and rest. He Restoreth Ministries was founded to fill that gap. God has provided a beautiful property in southern Oregon, and He has equipped Brent and Ruth Ullom — who have walked the same road — to minister to hurting missionaries with wisdom and compassion.</p>
+    <p class="section-body" style="margin-top:1rem;">In Luke 10, Jesus commended the Good Samaritan — the one who took the time and bore the cost to care for a wounded stranger. He Restoreth Ministries invites you to be that kind of Good Samaritan to missionaries who have given everything.</p>
+  </div>
+  <div class="reveal">
+    <img src="images/about-landscape.jpg" alt="He Restoreth property" style="width:100%;height:auto;display:block;border-radius:var(--radius);" />
+    <div style="background:var(--color-bg-mist);padding:1.6rem;border-radius:var(--radius);margin-top:1rem;border-left:3px solid var(--color-accent);">
+      <p style="font-size:var(--text-base);color:#3d4838;line-height:1.75;">He Restoreth Ministries, Inc. is a recognized 501(c)3 tax-exempt nonprofit organization. All donations are tax-deductible to the extent permitted by law.</p>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--color-bg-light);" id="staff">
+  <div class="reveal" style="text-align:center;"><p class="section-tag">Our Team</p><h2 class="section-title">Meet <em>the Ulloms</em></h2><div class="divider" style="margin:1.8rem auto;"></div><p class="section-body" style="margin:0 auto;text-align:center;">He Restoreth Ministries is led by a missionary family who understands firsthand the joys and hardships of life on the field. The Ulloms served in Ecuador for six years, and both Brent and Ruth grew up as Missionary Kids — Brent in Haiti, Ruth in Peru.</p></div>
+  <div class="staff-grid reveal">
+    <div class="staff-card">
+      <img id="img-brent" src="images/staff-brent.jpg" alt="Brent Ullom" />
+      <div class="staff-card-body"><h3>Brent Ullom</h3><span class="role">Founder &amp; Counselor · MK from Haiti</span><p>Brent holds a Master's degree in Clinical Psychology from Wheaton College, specializing in marriage and family, cross-cultural, and crisis counseling. He served as a missionary in Ecuador for six years and brings over 25 years of experience caring for missionaries.</p></div>
+    </div>
+    <div class="staff-card">
+      <img id="img-ruth" src="images/staff-ruth.jpg" alt="Ruth Ullom" />
+      <div class="staff-card-body"><h3>Ruth Ullom</h3><span class="role">Co-Founder &amp; Hospitality Director · MK from Peru</span><p>Ruth holds a degree in education and is gifted in hospitality and creating an environment of warmth and welcome. She brings a genuine love for people and a servant's heart to every guest who stays at the retreat.</p></div>
+    </div>
+  </div>
+  <div style="background:var(--color-white);padding:2.2rem;border-radius:var(--radius);margin-top:2rem;border-top:2px solid var(--color-bg-mist);">
+    <p style="font-size:var(--text-md);color:#3d4838;line-height:1.8;max-width:700px;margin:0 auto;text-align:center;">Brent and Ruth have four adult children: Timothy (married to Ashley, with daughter Amelia), Hannah, Rebekah, and Elisabeth. Their family story is one of faith, sacrifice, and God's faithfulness — and it is out of that story that this ministry was born.</p>
+  </div>
+</section>
+
+<section class="doctrine-section" id="doctrine">
+  <div class="reveal" style="text-align:center;"><p class="section-tag" style="color:var(--color-accent);">Our Beliefs</p><h2 class="section-title" style="color:var(--color-white);text-align:center;">Doctrinal <em>Statement</em></h2><div class="divider" style="margin:1.8rem auto;"></div><p style="font-size:var(--text-md);color:rgba(255,255,255,.6);max-width:580px;margin:0 auto;line-height:1.75;">He Restoreth Ministries is anchored in historic, evangelical Christian faith.</p></div>
+  <div class="doctrine-grid reveal">
+    <div class="doctrine-item"><h4>God</h4><p>We believe in one God, Creator of all things, holy, infinitely perfect, and eternally existing in a loving unity of three equally divine Persons: the Father, the Son, and the Holy Spirit. Having limitless knowledge and sovereign power, God has graciously purposed from eternity to redeem a people for Himself and to make all things new for His own glory.</p></div>
+    <div class="doctrine-item"><h4>The Bible</h4><p>We believe that God has spoken in the Scriptures, both Old and New Testaments, through the words of human authors. As the verbally inspired Word of God, the Bible is without error in the original writings, the complete revelation of His will for salvation, and the ultimate authority by which every realm of human knowledge and endeavor should be judged.</p></div>
+    <div class="doctrine-item"><h4>The Human Condition</h4><p>We believe that God created Adam and Eve in His image, but they sinned when tempted by Satan. In union with Adam, human beings are sinners by nature and by choice, alienated from God and under His wrath. Only through God's saving work in Jesus Christ can we be rescued, reconciled, and renewed.</p></div>
+    <div class="doctrine-item"><h4>Jesus Christ</h4><p>We believe that Jesus Christ is God incarnate, fully God and fully man, one Person in two natures. Jesus — Israel's promised Messiah — was conceived through the Holy Spirit and born of the virgin Mary. He lived a sinless life, was crucified, rose bodily from the dead, ascended into heaven, and sits at the right hand of God as our High Priest and Advocate.</p></div>
+    <div class="doctrine-item"><h4>The Work of Christ</h4><p>We believe that Jesus Christ, as our representative and substitute, shed His blood on the cross as the perfect, all-sufficient sacrifice for our sins. His atoning death and victorious resurrection constitute the only ground for salvation.</p></div>
+    <div class="doctrine-item"><h4>The Holy Spirit</h4><p>We believe that the Holy Spirit, in all that He does, glorifies the Lord Jesus Christ. He convicts the world of its guilt, regenerates sinners, and in Him believers are baptized into union with Christ. He also indwells, illuminates, guides, equips, and empowers believers for Christ-like living and service.</p></div>
+    <div class="doctrine-item"><h4>The Church</h4><p>We believe that the true church comprises all who have been justified by God's grace through faith alone in Christ alone. They are united by the Holy Spirit in the body of Christ, of which He is the Head. The Lord Jesus mandated two ordinances — baptism and the Lord's Supper — which visibly and tangibly express the Gospel.</p></div>
+    <div class="doctrine-item"><h4>Eternal Destiny</h4><p>We believe that God commands everyone everywhere to believe the Gospel by turning to Him in repentance and receiving the Lord Jesus Christ. God will raise the dead bodily and judge the world, assigning the unbeliever to eternal condemnation and the believer to eternal blessedness with the Lord in the new heaven and new earth, to the praise of His glorious grace.</p></div>
+  </div>
+</section>
+<div class="nonprofit-band reveal">
+  <p>He Restoreth Ministries, Inc. is a recognized <strong>501(c)3 tax-exempt organization</strong>. All financial gifts are tax-deductible to the extent permitted by law. Contact us at <a href="mailto:office@herestoreth.com">office@herestoreth.com</a> or call <a href="tel:15418657907">1 (541) 865-7907</a>.</p>
+</div>
+</div><div id="page-testimonials" class="page">
+<div class="page-hero" style="background: linear-gradient(to bottom, rgba(15,22,12,.54), rgba(15,22,12,.16) 70%, var(--color-bg-light) 100%), url('images/hero-testimonials.jpg') center / cover no-repeat;">
+  <p class="section-tag">Testimonials</p>
+  <h1 class="section-title" style="color:var(--color-white);font-size:clamp(2.5rem,5vw,4.5rem);">What Missionaries<br>Are <em>Saying</em></h1>
+</div>
+<div class="testi-featured reveal">
+  <blockquote>You were a life jacket for us in the stormy sea. Each time I wrote to you, you were able to lead us further in our journey. Then we were blessed to come to Oregon and spend a week with your precious family. Our children hit it off immediately and had such joy exploring the gorgeous property. What a place to be refreshed and ministered to. Our hearts are knit to yours and we hope God will allow us to return for an even longer stay next time.<cite>— Missionary Family Serving in Poland</cite></blockquote>
+</div>
+<section style="background:var(--color-bg-light);">
+  <div class="reveal"><p class="section-tag">More Voices from the Field</p><h2 class="section-title">Stories of <em>Restoration</em></h2><div class="divider"></div></div>
+  <div style="margin-top:3rem;">
+    <div class="testi-long reveal"><p>When we first contacted He Restoreth Ministries from Poland, Brent ministered to us during an incredibly difficult crisis. His counsel and prayer helped us rise above our circumstances and see our situation from God's perspective. He was truly a life jacket in a stormy sea — each email brought us further along in our journey toward healing and clarity.</p><p>Then we were blessed to actually come to Oregon and spend a week with Brent, Ruth, and their precious family. The children connected immediately and had so much joy exploring the gorgeous property. Thank you for allowing God to use your gifts and wisdom to walk us through the hardest season of our lives and ministry. We still feel your love and care deeply today.</p><cite class="testi-cite">— Missionary Family, Poland</cite></div>
+    <div class="testi-long reveal"><p>He Restoreth Ministries was a much-needed resource for our family during a very low point in our ministry and personal lives. The beautiful location, the Christian counsel, and the genuine fellowship were a blessing we did not expect to find in such measure. We arrived weary and left genuinely renewed.</p><cite class="testi-cite">— Missionary Family</cite></div>
+    <div class="testi-long reveal"><p>We came to He Restoreth Ministries knowing that the Lord is our Comforter and Healer. Through Godly counsel, times of solitude, time spent in nature, and genuine community with the Ulloms, we returned to our field of service refreshed and ready to move forward with renewed confidence in God's call.</p><cite class="testi-cite">— Missionary Family</cite></div>
+    <div class="testi-long reveal"><p>Thank you for these days of rest, rejuvenation, and reflection in such quiet, lovely surroundings. We have been blessed and encouraged beyond measure. The solitude, the restful reflection, the canoes and the lake, the paths for walking, and the time in meaningful conversation with Brent — all of it was precisely what our family needed.</p><cite class="testi-cite">— Visiting Missionary Family</cite></div>
+  </div>
+</section>
+<div class="cta-band reveal"><h2>Are You a Missionary in Need of Rest?</h2><p>We would be honored to welcome you. Please reach out to learn more about scheduling a stay or beginning a counseling conversation with Brent.</p><button class="btn-white" onclick="nav('counseling','get-help')">Get In Touch</button></div>
+</div><div id="page-give" class="page">
+<div class="page-hero" style="background: linear-gradient(to bottom, rgba(15,22,12,.54), rgba(15,22,12,.16) 70%, var(--color-bg-light) 100%), url('images/hero-give.jpg') center / cover no-repeat;">
+  <p class="section-tag">Partner With Us</p>
+  <h1 class="section-title" style="color:var(--color-white);font-size:clamp(2.5rem,5vw,4.5rem);">Help Us <em>Help</em><br>Missionaries</h1>
+</div>
+<section class="give-intro">
+  <div class="reveal">
+    <p class="section-tag">The Need</p>
+    <h2 class="section-title">Your Gift<br><em>Changes Lives</em></h2>
+    <div class="divider"></div>
+    <p class="section-body">He Restoreth Ministries operates entirely on the generosity of donors who believe that missionaries deserve care — not just deployment. Every dollar given enables us to provide the retreat apartment, maintain the property, support counseling services, and keep this ministry available to missionaries at no cost to them.</p>
+    <p class="section-body" style="margin-top:1rem;">In Luke 10, Jesus told the story of the Good Samaritan — a person who saw someone hurting, stopped, and paid the cost to bring healing. Will you be that person for a wounded missionary today?</p>
+    <div style="background:var(--color-bg-mist);padding:1.6rem;border-radius:var(--radius);border-left:3px solid var(--color-accent);margin-top:2rem;">
+      <p style="font-size:var(--text-base);color:#3d4838;line-height:1.75;"><strong style="color:var(--color-primary);">He Restoreth Ministries is a recognized 501(c)3 nonprofit.</strong> All gifts are tax-deductible. Make checks payable to <em>He Restoreth Ministries, Inc.</em> and mail to PO Box 47, Butte Falls, OR 97522.</p>
+    </div>
+    <a href="mailto:office@herestoreth.com" class="btn-forest" style="margin-top:2rem;display:inline-flex;">Contact Us About Giving</a>
+  </div>
+  <div class="reveal"><img src="images/give-landscape.jpg" alt="He Restoreth Ministry" style="width:100%;height:auto;display:block;border-radius:var(--radius);" /></div>
+</section>
+<section style="background:var(--color-bg-light);">
+  <div class="reveal" style="text-align:center;"><p class="section-tag">Ways to Give</p><h2 class="section-title">How You Can <em>Partner</em> With Us</h2><div class="divider" style="margin:1.8rem auto;"></div></div>
+  <div class="give-grid reveal">
+    <div class="give-card">
+      <svg class="give-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <h3>Give by Mail</h3>
+      <p>Make checks payable to <strong>He Restoreth Ministries, Inc.</strong> and mail to PO Box 47, Butte Falls, OR 97522. All gifts are tax-deductible.</p>
+    </div>
+    <div class="give-card">
+      <svg class="give-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+      <h3>Pray for the Ministry</h3>
+      <p>Your prayers are the most essential support we receive. Please pray for the missionaries we serve, for God's provision, and for continued fruit from this ministry.</p>
+    </div>
+    <div class="give-card">
+      <svg class="give-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+      <h3>Spread the Word</h3>
+      <p>Know a missionary, sending church, or mission organization that should know about He Restoreth? Please tell them — word of mouth is vital to reaching those in need.</p>
+    </div>
+  </div>
+</section>
+<div class="cta-band reveal"><h2>Ready to Partner With Us?</h2><p>For questions about giving or to discuss other ways to support this ministry, please don't hesitate to reach out.</p><a href="mailto:office@herestoreth.com" class="btn-white">Email Us</a></div>
+</div><footer>
+  <div class="footer-brand">
+    <div style="display:flex;align-items:center;gap:1.6rem;margin-bottom:1.2rem;">
+      <button onclick="nav('home')" style="background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;">
+        <img src="images/logo_1.png" alt="He Restoreth Ministries" style="height:180px;width:auto;display:block;opacity:.93;">
+      </button>
+      <p style="font-size:var(--text-sm);color:rgba(255,255,255,.45);line-height:1.8;max-width:220px;margin:0;">Providing healing, rest, and biblical care for missionaries who have given everything to proclaim the Gospel. A 501(c)3 nonprofit in Butte Falls, Oregon.</p>
+    </div>
+  </div>
+  <div class="footer-col"><h4>Ministry</h4><ul><li><button onclick="nav('about')">About HRM</button></li><li><button onclick="nav('about','staff')">Our Staff</button></li><li><button onclick="nav('about','doctrine')">Doctrinal Statement</button></li><li><button onclick="nav('give')">Partner With Us</button></li></ul></div>
+  <div class="footer-col"><h4>Retreat Center</h4><ul><li><button onclick="nav('retreat')">Overview</button></li><li><button onclick="nav('retreat','what-we-offer')">What We Offer</button></li><li><button onclick="nav('retreat','attractions')">Nearby Attractions</button></li><li><button onclick="nav('retreat','directions')">Directions</button></li></ul></div>
+  <div class="footer-col"><h4>Counseling</h4><ul><li><button onclick="nav('counseling')">Strategic Counseling</button></li><li><button onclick="nav('counseling','get-help')">Get Help Now</button></li><li><button onclick="nav('testimonials')">Testimonials</button></li><li><a href="mailto:office@herestoreth.com">office@herestoreth.com</a></li></ul></div>
+</footer>
+<div class="footer-bottom">
+  <p>© He Restoreth Ministries, Inc. · PO Box 47, Butte Falls, OR 97522</p>
+  <p>1 (541) 865-7907 · <a href="mailto:office@herestoreth.com">office@herestoreth.com</a> · <a href="https://www.facebook.com/herestorethministries" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:.35rem;color:rgba(255,255,255,.32);text-decoration:none;transition:color .25s;" onmouseover="this.style.color='rgba(255,255,255,.7)'" onmouseout="this.style.color='rgba(255,255,255,.32)'"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a></p>
+</div>
+
+<script>
+function nav(pageId, sectionId) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  var page = document.getElementById('page-' + pageId);
+  if (!page) return;
+  page.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (sectionId) {
+    setTimeout(function() {
+      var el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 250);
+  }
+  setTimeout(initReveal, 120);
+  setTimeout(updateParallax, 60);
+  var nl = document.getElementById('nav-links');
+  if (nl) nl.removeAttribute('style');
+}
+
+function toggleMob() {
+  var nl = document.getElementById('nav-links');
+  if (nl.style.display === 'flex') { nl.removeAttribute('style'); return; }
+  nl.setAttribute('style', 'display:flex;flex-direction:column;position:fixed;top:58px;left:0;right:0;background:rgba(245,241,232,.98);padding:1.5rem;gap:.3rem;z-index:199;border-bottom:2px solid var(--color-accent);');
+}
+
+function initReveal() {
+  var els = document.querySelectorAll('.page.active .reveal:not(.visible)');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(function(el) { obs.observe(el); });
+}
+initReveal();
+
+// Performance Optimization: Throttle the scroll listener using requestAnimationFrame
+let ticking = false;
+window.addEventListener('scroll', function() {
+  document.getElementById('main-nav').style.boxShadow =
+    window.scrollY > 20 ? '0 2px 20px rgba(0,0,0,.07)' : 'none';
+  
+  if (!ticking) {
+    window.requestAnimationFrame(function() {
+      updateParallax();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
+
+var bgSpeed  = 0.35;
+var imgSpeed = 0.12;
+
+function updateParallax() {
+  var scrollY = window.scrollY;
+  var vh = window.innerHeight;
+
+  var bgEls = document.querySelectorAll('.page.active .hero, .page.active .page-hero');
+  bgEls.forEach(function(el) {
+    var rect = el.getBoundingClientRect();
+    var offset = (rect.top + rect.height / 2 - vh / 2);
+    var shift  = 50 + offset * bgSpeed * -0.1;
+    shift = Math.max(20, Math.min(80, shift));
+    el.style.backgroundPositionY = shift + '%';
+  });
+
+  var imgWraps = document.querySelectorAll('.page.active .parallax-img-wrap img');
+  imgWraps.forEach(function(img) {
+    var rect = img.getBoundingClientRect();
+    if (rect.top < vh && rect.bottom > 0) {
+      var offset = (rect.top + rect.height / 2) - vh / 2;
+      var shift  = offset * imgSpeed;
+      img.style.transform = 'translateY(' + shift + 'px) scale(1.08)';
+    }
+  });
+}
+
+window.addEventListener('load', updateParallax);
+updateParallax();
+</script>
+</body>
+</html>
