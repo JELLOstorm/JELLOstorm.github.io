@@ -285,6 +285,7 @@ section { padding: var(--section-v) var(--section-h); }
   min-width: 100%; min-height: 100%;
   transform: translate(-50%, -50%);
   border: none;
+  opacity: 0; transition: opacity 1s ease;
 }
 .hero-overlay {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -1128,10 +1129,15 @@ updateParallax();
   var facade = document.getElementById('yt-facade');
   var iframe = document.getElementById('yt-iframe');
   if (!iframe || !facade) return;
+  // Delay src set so iframe loads hidden, avoiding play button flash
   setTimeout(function() {
     iframe.src = iframe.getAttribute('data-src');
     iframe.addEventListener('load', function() {
-      setTimeout(function() { facade.style.opacity = '0'; }, 800);
+      // Wait for autoplay to actually start before revealing
+      setTimeout(function() {
+        iframe.style.opacity = '1';
+        setTimeout(function() { facade.style.opacity = '0'; }, 600);
+      }, 1200);
     });
   }, 100);
 })();
