@@ -1133,11 +1133,11 @@ updateParallax();
   setTimeout(function() {
     iframe.src = iframe.getAttribute('data-src');
     iframe.addEventListener('load', function() {
-      // Wait for autoplay to actually start before revealing
+      // Show thumbnail for 6 seconds, then crossfade to video
       setTimeout(function() {
         iframe.style.opacity = '1';
         setTimeout(function() { facade.style.opacity = '0'; }, 600);
-      }, 1200);
+      }, 6000);
     });
   }, 100);
 })();
